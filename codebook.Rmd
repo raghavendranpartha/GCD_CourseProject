@@ -6,7 +6,37 @@ output:
 ---
 Description
 ===========
-The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities ('WALKING', "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS", "SITTING", "STANDING", "LAYING") wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually.
+The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities ('WALKING', "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS", "SITTING", "STANDING", "LAYING") wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data, present in train and test folders respectively
+
+The dataset includes the following files:
+=========================================
+
+- 'README.txt'
+
+- 'features_info.txt': Shows information about the variables used on the feature vector.
+
+- 'features.txt': List of all features.
+
+- 'activity_labels.txt': Links the class labels with their activity name.
+
+- 'train/X_train.txt': Training set.
+
+- 'train/y_train.txt': Training labels.
+
+- 'test/X_test.txt': Test set.
+
+- 'test/y_test.txt': Test labels.
+
+The following files are available for the train and test data. Their descriptions are equivalent. 
+
+- 'train/subject_train.txt': Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30. 
+
+- 'train/Inertial Signals/total_acc_x_train.txt': The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g'. Every row shows a 128 element vector. The same description applies for the 'total_acc_x_train.txt' and 'total_acc_z_train.txt' files for the Y and Z axis. 
+
+- 'train/Inertial Signals/body_acc_x_train.txt': The body acceleration signal obtained by subtracting the gravity from the total acceleration. 
+
+- 'train/Inertial Signals/body_gyro_x_train.txt': The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second. 
+
 
 The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
 
@@ -47,10 +77,10 @@ Total	            |	13 variables
 
 Notes: 
 ======
-- Features are normalized and bounded within [-1,1].
+- In the original dataset, features are normalized and bounded within [-1,1].
 
 
-The set of variables that were estimated from each of these signals are: 
+The set of variables of interest in this project that were estimated from each of these signals are: 
 mean(): Mean value
 std(): Standard deviation
 
@@ -68,9 +98,22 @@ Thus overall in this dataset we have 81 variables.
 
 Transformation
 ==============
-The dataset contains 180 rows corresponding to 6 types of activity for each of the 30 subjects, each of the row containing 81 columns - 2 columns corresponding to the subject and the activity, and 79 columns corresponding to *average* of each of the features for that activity, for that subject. 
+
+The first step in transforming the original dataset is to merge the test and train data into one dataset.
+For test and train data, we have three types of data - X (feature vector), y (Activity label) and subject Id.
+The three types of data within test and train are first combined column-wise to yield a 561+1+1 = 563 column dataset.
+The train data consists of 7352 rows, and test data 2947 rows
+
+This new test and train dataset are then merged row-wise to yield a merged dataset of dimensions 10299 rows vs 563 columns
+
+The features corresponding to the 79 variables described in the previous section are then extracted out, along with the activity descriptions and the subject ID.
+
+The final modified dataset generated in FINAL_tidydata.txt contains 180 rows corresponding to 6 types of activity for each of the 30 subjects, each of the row containing 81 columns - 2 columns corresponding to the subject and the activity, and 79 columns corresponding to *average* of each of the features for that activity, for that subject. 
 
 The data is in wide-form tidy data, as each row corresponds to one subject, and each column corresponds to only one variable.
+
+Variables
+=========
 
 1. tBodyAcc-mean()-X
     + Description: Normalized mean body acceleration signal from the smartphone accelerometer X axis; This is averaged across all observations for the subject performing the corresponding activity
@@ -310,6 +353,6 @@ The data is in wide-form tidy data, as each row corresponds to one subject, and 
     + Description: Normalized mean frequency obtained by weigthed average of frequency components from FFT of magnitude of time-derivative of angular velocity measured by gyroscope; This is averaged across all observations for the subject performing the corresponding activity
     + Units: 'Hz'
 80. Subject
-    + ID of the subject of the measurements. Ranges from 1 to 6
+    + ID of the subject of the measurements. Ranges from 1 to 30
 81. Activity
     + Activity during the measurement. Levels - ('WALKING', "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS", "SITTING", "STANDING", "LAYING")
