@@ -72,10 +72,11 @@ Total	            |	13 variables
 
 Notes: 
 ======
-- In the original dataset, features are normalized and bounded within [-1,1].
+There are a total 561 features that were estimated from these variables in the original dataset
 
+In the original dataset, features are normalized and bounded within [-1,1].
 
-The set of variables of interest in this project that were estimated from each of these signals are: 
+The set of features of interest in this project that were estimated from each of these signals are: 
 mean(): Mean value
 std(): Standard deviation
 
